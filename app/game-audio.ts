@@ -43,7 +43,6 @@ export class GameAudio {
       audio.pause();
       audio.currentTime = 0;
     }
-    this.primeEffects();
     void this.background.play().catch(() => undefined);
   }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import type { DifficultyKey, GameController, GameResult } from '../game/types';
 import { GameAudio } from './game-audio';
 
@@ -194,6 +195,15 @@ export default function GameClient() {
               <h1 className="game-title">召唤<br /><em>神龙</em></h1>
               <p className="tagline">吞噬进化，最终召唤神龙</p>
             </div>
+            <Image
+              className="home-dragon-art"
+              src="/assets/dragon.png"
+              alt=""
+              width={1086}
+              height={1448}
+              priority
+              aria-hidden="true"
+            />
             <div className="start-card">
               <p className="section-label">选择难度</p>
               <div className="difficulty-grid" role="radiogroup" aria-label="选择难度">

@@ -331,7 +331,7 @@ export class SummonDragonScene extends Phaser.Scene {
   private updateCameraZoom(level: number, animate: boolean) {
     if (level === this.cameraLevel) return;
     this.cameraLevel = level;
-    const targetZoom = Phaser.Math.Clamp(1.52 - level * 0.04, 1.2, 1.52);
+    const targetZoom = Phaser.Math.Clamp(1.58 - level * 0.041, 1.25, 1.58);
     if (animate) this.cameras.main.zoomTo(targetZoom, 420, 'Sine.easeOut');
     else this.cameras.main.setZoom(targetZoom);
   }
@@ -385,7 +385,9 @@ export class SummonDragonScene extends Phaser.Scene {
     return {
       sprite,
       level,
-      radius: definition.radius * visualScale,
+      // High-level creatures are drawn wider than the early creatures. Include
+      // that visible width in contact checks so a graphic overlap always counts.
+      radius: definition.radius * visualScale * aspectRatio,
       naturalScaleX: sprite.scaleX,
       naturalScaleY: sprite.scaleY,
       baseScaleX: sprite.scaleX,
@@ -510,11 +512,19 @@ export class SummonDragonScene extends Phaser.Scene {
         graphics.fillCircle(61, 55, 9); graphics.fillCircle(82, 72, 7);
       }
     } else if (level === 5) {
-      graphics.lineStyle(24, color, 1);
-      graphics.beginPath(); graphics.moveTo(18, 76); graphics.lineTo(36, 49); graphics.lineTo(58, 52); graphics.lineTo(78, 77); graphics.lineTo(108, 53); graphics.strokePath();
+      // Rounded, ribbon-like electric eel with a bright lightning stripe.
+      graphics.fillEllipse(19, 75, 29, 18);
+      graphics.fillEllipse(35, 61, 35, 24);
+      graphics.fillEllipse(55, 52, 39, 27);
+      graphics.fillEllipse(76, 61, 39, 28);
+      graphics.fillEllipse(96, 54, 38, 29);
+      graphics.fillEllipse(110, 51, 28, 27);
+      graphics.fillStyle(dark, 0.38);
+      graphics.fillTriangle(18, 75, 5, 62, 7, 86);
+      graphics.fillStyle(accent, 1);
       graphics.lineStyle(5, accent, 1);
-      graphics.beginPath(); graphics.moveTo(25, 69); graphics.lineTo(41, 49); graphics.lineTo(58, 55); graphics.lineTo(77, 75); graphics.lineTo(101, 57); graphics.strokePath();
-      graphics.fillCircle(106, 52, 14);
+      graphics.beginPath(); graphics.moveTo(16, 71); graphics.lineTo(35, 57); graphics.lineTo(53, 58); graphics.lineTo(70, 68); graphics.lineTo(88, 55); graphics.lineTo(108, 53); graphics.strokePath();
+      graphics.fillTriangle(60, 64, 48, 84, 70, 72);
     } else if (level === 6) {
       graphics.fillTriangle(25, 64, 4, 43, 4, 84);
       graphics.fillEllipse(68, 64, 79, 37);
@@ -526,13 +536,34 @@ export class SummonDragonScene extends Phaser.Scene {
       graphics.fillStyle(accent, 1); graphics.fillEllipse(79, 72, 51, 21);
       graphics.lineStyle(4, accent, 0.9);
       graphics.beginPath(); graphics.moveTo(84, 40); graphics.lineTo(84, 27); graphics.moveTo(84, 28); graphics.lineTo(76, 19); graphics.moveTo(84, 28); graphics.lineTo(92, 19); graphics.strokePath();
-    } else {
-      graphics.lineStyle(level === 9 ? 30 : 24, color, 1);
+    } else if (level === 8) {
+      graphics.lineStyle(24, color, 1);
       graphics.beginPath(); graphics.moveTo(15, 74); graphics.lineTo(31, 43); graphics.lineTo(50, 44); graphics.lineTo(70, 80); graphics.lineTo(87, 76); graphics.lineTo(105, 52); graphics.strokePath();
-      graphics.fillCircle(106, 51, level === 9 ? 20 : 16);
+      graphics.fillCircle(106, 51, 16);
       graphics.fillStyle(accent, 1);
       graphics.fillTriangle(102, 37, 105, 15, 114, 39); graphics.fillTriangle(91, 43, 88, 22, 101, 40);
       graphics.fillCircle(42, 54, 6); graphics.fillCircle(66, 77, 6);
+    } else {
+      // A fuller S-shaped dragon: dark outline, golden body, belly, mane,
+      // horns and whiskers remain readable even when the sprite is moving.
+      graphics.lineStyle(38, dark, 1);
+      graphics.beginPath(); graphics.moveTo(10, 76); graphics.lineTo(27, 51); graphics.lineTo(47, 43); graphics.lineTo(66, 70); graphics.lineTo(84, 78); graphics.lineTo(101, 55); graphics.strokePath();
+      graphics.lineStyle(30, color, 1);
+      graphics.beginPath(); graphics.moveTo(10, 76); graphics.lineTo(27, 51); graphics.lineTo(47, 43); graphics.lineTo(66, 70); graphics.lineTo(84, 78); graphics.lineTo(101, 55); graphics.strokePath();
+      graphics.lineStyle(7, accent, 0.9);
+      graphics.beginPath(); graphics.moveTo(18, 69); graphics.lineTo(31, 56); graphics.lineTo(46, 53); graphics.lineTo(63, 76); graphics.lineTo(82, 84); graphics.strokePath();
+      graphics.fillStyle(0xff7b45, 1);
+      graphics.fillTriangle(26, 40, 34, 22, 41, 43);
+      graphics.fillTriangle(48, 41, 56, 22, 62, 50);
+      graphics.fillTriangle(70, 68, 78, 51, 84, 76);
+      graphics.fillStyle(color, 1);
+      graphics.fillEllipse(107, 50, 39, 31);
+      graphics.fillEllipse(119, 54, 23, 17);
+      graphics.fillStyle(accent, 1);
+      graphics.fillTriangle(101, 38, 103, 14, 111, 39);
+      graphics.fillTriangle(110, 39, 118, 18, 119, 44);
+      graphics.lineStyle(3, accent, 1);
+      graphics.beginPath(); graphics.moveTo(116, 56); graphics.lineTo(126, 66); graphics.moveTo(115, 52); graphics.lineTo(127, 48); graphics.strokePath();
     }
 
     graphics.fillStyle(0xffffff, 1);
