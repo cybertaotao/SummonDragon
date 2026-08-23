@@ -1,0 +1,284 @@
+@import 'tailwindcss';
+
+:root {
+  --ink: #123a46;
+  --muted: #507985;
+  --cream: #fffaf0;
+  --yellow: #ffd84d;
+  --orange: #ff875b;
+  --aqua: #18bdc7;
+  --deep-aqua: #087c91;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #073f52;
+  color: var(--ink);
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button {
+  border: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app-stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(3, 53, 70, 0.82), rgba(11, 107, 112, 0.74)),
+    url('/assets/pond-background.png') center / cover;
+}
+
+.app-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 28%, rgba(0, 29, 42, 0.38));
+  pointer-events: none;
+}
+
+.ambient {
+  position: absolute;
+  width: 38vmin;
+  height: 38vmin;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+  box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.08);
+  animation: ambientFloat 9s ease-in-out infinite;
+}
+
+.ambient-one { left: 5vw; top: 11vh; }
+.ambient-two { right: 3vw; bottom: 8vh; animation-delay: -4s; }
+
+.game-frame {
+  position: relative;
+  z-index: 1;
+  width: min(100vw, calc(100dvh * 390 / 844));
+  height: min(100dvh, calc(100vw * 844 / 390));
+  max-width: 430px;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+  background: #21c6c9;
+  box-shadow: 0 28px 90px rgba(0, 25, 36, 0.48);
+  isolation: isolate;
+  touch-action: none;
+}
+
+.game-host,
+.game-host canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  touch-action: none;
+}
+
+.screen-layer {
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+}
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  color: white;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(7, 117, 132, 0.18), rgba(4, 87, 105, 0.72)),
+    url('/assets/pond-background.png') center / cover;
+}
+
+.logo-orb,
+.result-icon {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  margin-bottom: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.68);
+  border-radius: 34% 66% 53% 47% / 46% 42% 58% 54%;
+  color: #fff9d3;
+  font-family: "STKaiti", "KaiTi", serif;
+  font-size: 45px;
+  font-weight: 900;
+  background: linear-gradient(145deg, #ffc94d, #ff704a);
+  box-shadow: 0 14px 30px rgba(5, 75, 86, 0.28), inset 0 2px 10px rgba(255, 255, 255, 0.45);
+  transform: rotate(-6deg);
+}
+
+.loading-track {
+  width: min(240px, 76%);
+  height: 8px;
+  margin-top: 26px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.loading-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #fff3a6;
+  box-shadow: 0 0 18px rgba(255, 240, 115, 0.9);
+  transition: width 180ms ease;
+}
+
+.loading-screen p { margin-top: 12px; opacity: 0.82; font-size: 13px; }
+
+.home-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: max(38px, env(safe-area-inset-top)) 22px max(28px, env(safe-area-inset-bottom));
+  background:
+    linear-gradient(180deg, rgba(5, 92, 104, 0.05) 18%, rgba(4, 60, 73, 0.38) 100%),
+    url('/assets/pond-background.png') center / 100% 100% no-repeat;
+}
+
+.home-top { padding: 24px 8px 0; color: white; text-shadow: 0 3px 14px rgba(3, 74, 85, 0.28); }
+.eyebrow { display: inline-flex; padding: 6px 12px; border: 1px solid rgba(255,255,255,.44); border-radius: 99px; font-size: 11px; font-weight: 800; letter-spacing: .18em; background: rgba(5, 92, 104, .16); backdrop-filter: blur(6px); }
+.game-title { margin: 16px 0 6px; font-family: "STKaiti", "KaiTi", serif; font-size: clamp(60px, 17vw, 78px); font-weight: 900; line-height: .82; letter-spacing: -.08em; }
+.game-title em { color: #fff08b; font-style: normal; }
+.game-title.small { margin: 0; font-size: 46px; letter-spacing: -.05em; }
+.tagline { margin: 17px 0 0; font-size: 15px; font-weight: 700; letter-spacing: .08em; }
+
+.start-card {
+  padding: 20px 18px 17px;
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 28px;
+  background: rgba(255, 252, 239, 0.94);
+  box-shadow: 0 18px 44px rgba(2, 72, 83, .28), inset 0 1px 0 white;
+  backdrop-filter: blur(16px);
+}
+
+.section-label { margin: 0 0 11px; font-size: 12px; font-weight: 900; color: #47727a; letter-spacing: .16em; }
+.difficulty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.difficulty-button { min-height: 63px; padding: 9px 4px; border: 1.5px solid #d3e8e5; border-radius: 16px; background: #f7fffb; transition: transform 150ms ease, border-color 150ms ease, background 150ms ease; }
+.difficulty-button:active { transform: scale(.97); }
+.difficulty-button strong { display: block; font-size: 15px; }
+.difficulty-button span { display: block; margin-top: 3px; color: #71949a; font-size: 9px; }
+.difficulty-button.selected { border-color: #1bb6ad; color: #087b79; background: linear-gradient(180deg, #dffbf2, #c6f3e8); box-shadow: 0 5px 14px rgba(28, 176, 164, .15); }
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+  min-height: 54px;
+  border-radius: 18px;
+  font-weight: 900;
+}
+
+.primary-button { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; padding: 0 22px; color: #17434a; font-size: 17px; background: linear-gradient(135deg, #ffe66d, #ffc64d); box-shadow: 0 9px 20px rgba(255, 174, 50, .3), inset 0 2px 0 rgba(255,255,255,.52); }
+.primary-button b { font-size: 24px; transition: transform 160ms ease; }
+.primary-button:active b { transform: translateX(4px); }
+.primary-button.compact { min-height: 50px; margin-top: 18px; }
+.secondary-button { margin-top: 10px; border: 1.5px solid #c8e3df; color: #28606a; background: #eef9f5; }
+.text-button { margin-top: 15px; padding: 8px 20px; color: #5e8086; font-size: 13px; font-weight: 800; background: transparent; }
+.play-hint { margin: 12px 0 0; color: #709096; text-align: center; font-size: 10px; letter-spacing: .08em; }
+
+.pause-button {
+  position: absolute;
+  z-index: 20;
+  top: max(18px, env(safe-area-inset-top));
+  right: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 15px;
+  background: rgba(5, 91, 104, .42);
+  box-shadow: 0 7px 18px rgba(5, 73, 83, .18);
+  backdrop-filter: blur(8px);
+}
+.pause-button i { width: 4px; height: 15px; border-radius: 4px; background: white; }
+
+.sound-button {
+  position: absolute;
+  z-index: 45;
+  top: max(18px, env(safe-area-inset-top));
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 15px;
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 900;
+  background: rgba(5, 91, 104, .42);
+  box-shadow: 0 7px 18px rgba(5, 73, 83, .18);
+  backdrop-filter: blur(8px);
+}
+
+.sound-button span { transform: translateY(-1px); }
+.sound-button.muted { opacity: .7; }
+.sound-button.muted::after {
+  content: "";
+  position: absolute;
+  width: 27px;
+  height: 3px;
+  border-radius: 3px;
+  background: #ffdf8a;
+  transform: rotate(-45deg);
+  box-shadow: 0 1px 2px rgba(0,0,0,.16);
+}
+
+.tutorial-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0; color: white; text-align: center; background: rgba(4, 58, 70, .58); backdrop-filter: blur(4px); }
+.gesture-hand { font-size: 56px; animation: gestureMove 1.6s ease-in-out infinite; filter: drop-shadow(0 8px 12px rgba(0,0,0,.18)); }
+.tutorial-card { margin-top: 30px; padding: 22px 25px; border: 1px solid rgba(255,255,255,.55); border-radius: 24px; background: rgba(6, 95, 106, .56); box-shadow: 0 16px 35px rgba(0, 33, 44, .2); }
+.tutorial-card h2 { margin: 0 0 14px; font-size: 20px; }
+.tutorial-card p { margin: 6px 0; font-size: 13px; opacity: .9; }
+.tutorial-card span { display: block; margin-top: 17px; color: #fff19c; font-size: 11px; font-weight: 800; }
+
+.modal-shade { display: grid; place-items: center; padding: 26px; background: rgba(2, 49, 62, .58); backdrop-filter: blur(7px); }
+.dialog-card { width: min(310px, 100%); padding: 27px 24px 21px; border: 1px solid rgba(255,255,255,.8); border-radius: 28px; text-align: center; background: rgba(255, 252, 242, .97); box-shadow: 0 24px 60px rgba(0, 39, 53, .32); animation: dialogIn 260ms cubic-bezier(.2,.9,.25,1.25); }
+.dialog-kicker { color: #2c9f98; font-size: 11px; font-weight: 900; letter-spacing: .18em; }
+.dialog-card h2 { margin: 7px 0 0; font-family: "STKaiti", "KaiTi", serif; font-size: 34px; }
+.result-icon { width: 76px; height: 76px; margin: -62px auto 17px; font-size: 38px; }
+.result-card.lose .result-icon { color: white; background: linear-gradient(145deg, #60b8c9, #397c9f); }
+
+.rotate-screen { z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; background: rgba(3, 55, 68, .94); }
+.rotate-screen h2 { margin: 22px 0 5px; font-size: 22px; }
+.rotate-screen p { margin: 0; font-size: 13px; opacity: .72; }
+.phone-icon { width: 48px; height: 78px; padding: 8px; border: 4px solid white; border-radius: 12px; transform: rotate(-90deg); animation: rotatePhone 1.8s ease-in-out infinite; }
+.phone-icon span { display: block; width: 100%; height: 100%; border-radius: 5px; background: linear-gradient(160deg, #67dbe1, #168b9c); }
+
+@keyframes gestureMove { 0%,100% { transform: translate(-20px, 14px) rotate(-8deg); } 50% { transform: translate(24px, -8px) rotate(6deg); } }
+@keyframes dialogIn { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes ambientFloat { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-24px) scale(1.06); } }
+@keyframes rotatePhone { 0%,100% { transform: rotate(-90deg); } 50% { transform: rotate(0deg); } }
+
+@media (max-width: 430px) {
+  .game-frame { width: 100vw; height: 100dvh; max-width: none; aspect-ratio: auto; box-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
