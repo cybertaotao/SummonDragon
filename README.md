@@ -1,7 +1,7 @@
 # 召唤神龙 Web MVP
 
 <p align="center">
-  <img src="./public/og2.png" alt="召唤神龙游戏预览" width="760" />
+  <img src="./public/og.png" alt="召唤神龙游戏预览" width="760" />
 </p>
 
 <p align="center">
