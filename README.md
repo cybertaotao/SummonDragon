@@ -1,7 +1,7 @@
 # 召唤神龙 Web MVP
 
 <p align="center">
-  <img src="./public/og.png" alt="召唤神龙游戏预览" width="760" />
+  <img src="./public/og2.png" alt="召唤神龙游戏预览" width="760" />
 </p>
 
 <p align="center">
@@ -70,12 +70,18 @@
 
 ## 技术栈
 
-- React 19
-- TypeScript 5
-- Phaser 4
-- Next.js / Vinext
-- Vite 8
-- ESLint 9
+| 技术 | 项目中的用途 |
+| --- | --- |
+| React 19 | 构建首页、难度选择、教程、暂停与结算弹窗，并管理页面和游戏状态。 |
+| TypeScript 5 | 为页面交互、游戏回调、生物数据和难度配置提供静态类型检查。 |
+| Phaser 4 | 负责 Canvas 渲染、游戏主循环、生物移动、碰撞判定、镜头跟随、程序化绘制与粒子特效。 |
+| Next.js 16 | 提供 React 应用结构、页面元数据、图片优化和客户端组件组织方式。 |
+| Vinext | 通过 Vite 运行 Next.js 兼容应用，负责本地开发、生产构建及 Cloudflare Worker 兼容输出。 |
+| Vite 8 | 提供快速开发服务、模块热更新和生产资源打包。 |
+| HTMLAudioElement | 播放循环背景音乐和吞噬、受击、胜利、失败音效，并处理移动浏览器的音频解锁限制。 |
+| CSS | 完成竖屏响应式布局、安全区适配、首页神龙漂浮动画和各类界面视觉效果。 |
+| localStorage | 仅在本机保存「是否已看过首次教程」，不上传玩家数据。 |
+| ESLint 9 | 统一代码规范并在提交前检查常见问题。 |
 
 ## 快速开始
 
