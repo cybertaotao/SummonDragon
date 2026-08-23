@@ -40,12 +40,12 @@ export interface DifficultyDefinition {
 export const DIFFICULTIES: Record<DifficultyKey, DifficultyDefinition> = {
   easy: {
     label: '简单',
-    targetWild: 58,
-    speedMultiplier: 1.08,
-    lowerWeight: 0.4,
-    equalWeight: 0.3,
-    higherWeight: 0.3,
-    spawnDelay: 540,
+    targetWild: 44,
+    speedMultiplier: 0.8,
+    lowerWeight: 0.6,
+    equalWeight: 0.28,
+    higherWeight: 0.12,
+    spawnDelay: 720,
   },
   normal: {
     label: '普通',

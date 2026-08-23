@@ -19,7 +19,7 @@ export default function GameClient() {
   const audioRef = useRef<GameAudio | null>(null);
   const phaseRef = useRef<Phase>('loading');
   const [phase, setPhaseState] = useState<Phase>('loading');
-  const [difficulty, setDifficulty] = useState<DifficultyKey>('hard');
+  const [difficulty, setDifficulty] = useState<DifficultyKey>('easy');
   const [result, setResult] = useState<GameResult>('win');
   const [isLandscape, setIsLandscape] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
